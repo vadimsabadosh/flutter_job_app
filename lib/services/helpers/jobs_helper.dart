@@ -13,7 +13,7 @@ class JobsHelper {
       "Content-Type": "application/json",
     };
 
-    var url = Uri.https(Config.apiUrl, Config.jobs);
+    var url = Uri.http(Config.apiUrl, Config.jobs);
     var response = await client.get(
       url,
       headers: requestHeaders,
@@ -23,6 +23,7 @@ class JobsHelper {
       List<JobsResponse> jobs = jobsResponseFromJson(response.body);
       return jobs;
     } else {
+      print(response.body.toString());
       throw Exception("Failed to get jobs");
     }
   }
@@ -32,7 +33,7 @@ class JobsHelper {
       "Content-Type": "application/json",
     };
 
-    var url = Uri.https(Config.apiUrl, "${Config.jobs}/$id");
+    var url = Uri.http(Config.apiUrl, "${Config.jobs}/$id");
     var response = await client.get(
       url,
       headers: requestHeaders,
@@ -51,7 +52,7 @@ class JobsHelper {
       "Content-Type": "application/json",
     };
 
-    var url = Uri.https(Config.apiUrl, Config.recentJob);
+    var url = Uri.http(Config.apiUrl, Config.recentJob);
     var response = await client.get(
       url,
       headers: requestHeaders,
@@ -72,7 +73,7 @@ class JobsHelper {
       "Content-Type": "application/json",
     };
 
-    var url = Uri.https(Config.apiUrl, "${Config.search}/$search");
+    var url = Uri.http(Config.apiUrl, "${Config.search}/$search");
     var response = await client.get(
       url,
       headers: requestHeaders,

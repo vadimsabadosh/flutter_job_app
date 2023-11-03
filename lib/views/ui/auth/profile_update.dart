@@ -51,7 +51,6 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
 
   @override
   Widget build(BuildContext context) {
-    print(profile);
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.h),

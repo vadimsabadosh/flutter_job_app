@@ -3,40 +3,24 @@ import 'package:get/get.dart';
 import 'package:job_app/models/request/auth/login_model.dart';
 import 'package:job_app/models/request/auth/profile_update_model.dart';
 import 'package:job_app/services/helpers/auth_helper.dart';
+import 'package:job_app/views/ui/auth/login.dart';
 import 'package:job_app/views/ui/auth/update_user.dart';
-import 'package:job_app/views/ui/homepage.dart';
 import 'package:job_app/views/ui/mainscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/app_constants.dart';
 
 class LoginNotifier extends ChangeNotifier {
-  bool _obscureText = true;
   bool _firstTime = true;
-  bool? _entrypoint;
   bool? _loggedIn;
 
   final loginFormValue = GlobalKey<FormState>();
   final profileFormValue = GlobalKey<FormState>();
 
-  bool get obscureText => _obscureText;
-
-  set obscureText(bool newState) {
-    _obscureText = newState;
-    notifyListeners();
-  }
-
   bool get firstTime => _firstTime;
 
   set firstTime(bool newState) {
     _firstTime = newState;
-    notifyListeners();
-  }
-
-  bool get entrypoint => _entrypoint ?? false;
-
-  set entrypoint(bool newState) {
-    _entrypoint = newState;
     notifyListeners();
   }
 
@@ -49,7 +33,6 @@ class LoginNotifier extends ChangeNotifier {
 
   getPrefs() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    entrypoint = prefs.getBool('entrypoint') ?? false;
     loggedIn = prefs.getBool('loggedIn') ?? false;
   }
 
@@ -77,10 +60,7 @@ class LoginNotifier extends ChangeNotifier {
 
   userLogin(LoginModel model) {
     AuthHelper.login(model).then((value) {
-      if (value && firstTime) {
-        Get.off(() => const PersonalDetails());
-        firstTime = false;
-      } else if (value && !firstTime) {
+      if (value) {
         Get.off(() => const MainScreen());
       } else {
         Get.snackbar(
@@ -95,21 +75,6 @@ class LoginNotifier extends ChangeNotifier {
         );
       }
     });
-  }
-
-  logout() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    await prefs.setBool('loggedIn', false);
-    await prefs.remove('token');
-    await prefs.setBool('entrypoint', true);
-    firstTime = false;
-    loggedIn = false;
-    entrypoint = true;
-
-    print("firstTime: ${firstTime}");
-    print("loggedIn: ${loggedIn}");
-    notifyListeners();
   }
 
   updateProfile(ProfileUpdateReq model) async {
@@ -137,5 +102,14 @@ class LoginNotifier extends ChangeNotifier {
         );
       }
     });
+  }
+
+  logout() async {
+    var response = await AuthHelper.logout();
+    if (response) {
+      Get.off(() => const LoginPage());
+      loggedIn = false;
+      notifyListeners();
+    }
   }
 }

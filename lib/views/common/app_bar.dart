@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:job_app/views/common/exports.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key, this.text, required this.child, this.actions});
+  const CustomAppBar({super.key, this.text, this.child, this.actions});
 
   final String? text;
-  final Widget child;
+  final Widget? child;
   final List<Widget>? actions;
 
   @override

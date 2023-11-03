@@ -8,14 +8,6 @@ import '../constants/app_constants.dart';
 
 class SignUpNotifier extends ChangeNotifier {
 // trigger to hide and unhide the password
-  bool _isObsecure = true;
-
-  bool get isObsecure => _isObsecure;
-
-  set isObsecure(bool obsecure) {
-    _isObsecure = obsecure;
-    notifyListeners();
-  }
 
 // triggered when the login button is clicked to show the loading widget
   bool _processing = false;

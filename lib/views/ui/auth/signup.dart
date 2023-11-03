@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:job_app/controllers/exports.dart';
-import 'package:job_app/controllers/signup_provider.dart';
 import 'package:job_app/models/request/auth/signup_model.dart';
 import 'package:job_app/views/common/app_bar.dart';
 import 'package:job_app/views/common/custom_btn.dart';
@@ -25,6 +24,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
 
+  bool isPasswordHidden = true;
+
+  void showHidePassword() {
+    setState(() {
+      isPasswordHidden = !isPasswordHidden;
+    });
+  }
+
   @override
   void dispose() {
     name.dispose();
@@ -39,16 +46,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Consumer<SignUpNotifier>(
       builder: (context, state, child) {
         return Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(50),
+          appBar: const PreferredSize(
+            preferredSize: Size.fromHeight(50),
             child: CustomAppBar(
               text: "Sign Up",
-              child: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: const Icon(CupertinoIcons.arrow_left),
-              ),
             ),
           ),
           body: Padding(
@@ -97,7 +98,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   const HeightSpacer(size: 20),
                   CustomTextField(
                     controller: password,
-                    obscureText: state.isObsecure,
+                    obscureText: isPasswordHidden,
                     keyboardType: TextInputType.text,
                     hintText: "Password",
                     validator: (password) {
@@ -108,11 +109,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       }
                     },
                     suffixIcon: GestureDetector(
-                      onTap: () {
-                        state.isObsecure = !state.isObsecure;
-                      },
+                      onTap: showHidePassword,
                       child: Icon(
-                        state.isObsecure
+                        isPasswordHidden
                             ? Icons.visibility
                             : Icons.visibility_off,
                         color: Color(kDark.value),

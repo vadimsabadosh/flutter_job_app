@@ -19,7 +19,7 @@ class ChatHelper {
       "Authorization": "Bearer $token"
     };
 
-    var url = Uri.https(Config.apiUrl, Config.chatUrl);
+    var url = Uri.http(Config.apiUrl, Config.chatUrl);
     var response = await client.post(
       url,
       headers: requestHeaders,
@@ -46,7 +46,7 @@ class ChatHelper {
       "Authorization": "Bearer $token"
     };
 
-    var url = Uri.https(Config.apiUrl, Config.chatUrl);
+    var url = Uri.http(Config.apiUrl, Config.chatUrl);
     var response = await client.get(
       url,
       headers: requestHeaders,

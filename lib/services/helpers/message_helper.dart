@@ -18,7 +18,7 @@ class MessagingHelper {
       "Authorization": "Bearer $token"
     };
 
-    var url = Uri.https(Config.apiUrl, Config.messagesUrl);
+    var url = Uri.http(Config.apiUrl, Config.messagesUrl);
     var response = await client.post(
       url,
       headers: requestHeaders,
@@ -48,7 +48,7 @@ class MessagingHelper {
       "Authorization": "Bearer $token"
     };
 
-    var url = Uri.https(
+    var url = Uri.http(
       Config.apiUrl,
       "${Config.messagesUrl}/$chatId",
       {"page": page.toString()},

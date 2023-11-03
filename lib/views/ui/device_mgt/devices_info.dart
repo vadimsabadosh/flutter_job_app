@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:job_app/controllers/exports.dart';
 import 'package:job_app/views/common/app_bar.dart';
-import 'package:job_app/views/common/app_style.dart';
 import 'package:job_app/views/common/drawer/drawer_widget.dart';
 import 'package:job_app/views/common/exports.dart';
 import 'package:job_app/views/common/height_spacer.dart';
-import 'package:job_app/views/ui/onboarding/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'widgets/device_info.dart';
@@ -18,7 +15,6 @@ class DeviceManagement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var zoomNotifier = Provider.of<ZoomNotifier>(context);
-    var onBoardNotifier = Provider.of<OnBoardNotifier>(context);
     String date = DateTime.now().toString();
     var loginDate = date.substring(0, 11);
     return Scaffold(
@@ -67,9 +63,8 @@ class DeviceManagement extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
-                  onTap: () {
-                    onBoardNotifier.isLastPage = true;
-                    Get.to(() => const OnBoardingScreen());
+                  onTap: () async {
+                    await value.logout();
                     zoomNotifier.currentIndex = 0;
                   },
                   child: Align(

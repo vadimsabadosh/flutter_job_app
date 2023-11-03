@@ -17,7 +17,7 @@ class AuthHelper {
       "Content-Type": "application/json",
     };
 
-    var url = Uri.https(Config.apiUrl, Config.loginUrl);
+    var url = Uri.http(Config.apiUrl, Config.loginUrl);
     var response = await client.post(
       url,
       headers: requestHeaders,
@@ -35,7 +35,6 @@ class AuthHelper {
       await prefs.setString('id', id);
       await prefs.setString('profile', profile);
       await prefs.setBool('loggedIn', true);
-
       return true;
     } else {
       return false;
@@ -52,13 +51,12 @@ class AuthHelper {
       "Authorization": "Bearer $token"
     };
 
-    var url = Uri.https(Config.apiUrl, "${Config.profileUrl}/$userId");
+    var url = Uri.http(Config.apiUrl, "${Config.profileUrl}/$userId");
     var response = await client.put(
       url,
       headers: requestHeaders,
       body: jsonEncode(model),
     );
-    print("response: ${response.body.toString()}");
 
     if (response.statusCode == 200) {
       return true;
@@ -72,7 +70,7 @@ class AuthHelper {
       "Content-Type": "application/json",
     };
 
-    var url = Uri.https(Config.apiUrl, Config.signupUrl);
+    var url = Uri.http(Config.apiUrl, Config.signupUrl);
     var response = await client.post(
       url,
       headers: requestHeaders,
@@ -95,7 +93,7 @@ class AuthHelper {
       "Authorization": "Bearer $token"
     };
 
-    var url = Uri.https(Config.apiUrl, Config.profileUrl);
+    var url = Uri.http(Config.apiUrl, Config.profileUrl);
     var response = await client.get(
       url,
       headers: requestHeaders,
@@ -110,11 +108,29 @@ class AuthHelper {
   }
 
   static Future<bool> logout() async {
-    //if (response.statusCode == 201) {
-    //  return true;
-    //} else {
-    //  return false;
-    //}
-    return true;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+
+    Map<String, String> requestHeaders = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token"
+    };
+
+    var url = Uri.http(Config.apiUrl, Config.logoutUrl);
+    var response = await client.post(
+      url,
+      headers: requestHeaders,
+    );
+
+    if (response.statusCode == 200) {
+      await prefs.remove('token');
+      await prefs.remove('id');
+      await prefs.remove('profile');
+      await prefs.setBool('loggedIn', false);
+      return true;
+    } else {
+      print(response.body.toString());
+      throw Exception("Failed to logout");
+    }
   }
 }

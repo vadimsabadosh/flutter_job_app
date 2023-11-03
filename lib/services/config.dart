@@ -1,7 +1,8 @@
 class Config {
-  static const apiUrl = "jobappbackend-production-1f10.up.railway.app";
-  //static const apiUrl = "192.168.1.105:5000";
+  //static const apiUrl = "jobappbackend-production-1f10.up.railway.app";
+  static const apiUrl = "192.168.1.105:5000";
   static const String loginUrl = "/api/login";
+  static const String logoutUrl = "/api/logout";
   static const String signupUrl = "/api/register";
   static const String jobs = "/api/job";
   static const String recentJob = "/api/job/recent";

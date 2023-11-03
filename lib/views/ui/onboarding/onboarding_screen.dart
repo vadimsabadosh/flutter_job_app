@@ -34,16 +34,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           return Stack(
             children: [
               PageView(
-                physics: state.isLastPage
-                    ? const NeverScrollableScrollPhysics()
-                    : const AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 controller: pageController,
                 onPageChanged: (index) {
                   state.isLastPage = index == 2;
                 },
-                children: state.isLastPage
-                    ? const [PageThree()]
-                    : const [PageOne(), PageTwo(), PageThree()],
+                children: const [PageOne(), PageTwo(), PageThree()],
               ),
               Positioned(
                 bottom: height * 0.12,

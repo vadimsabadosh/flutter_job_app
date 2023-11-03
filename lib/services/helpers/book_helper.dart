@@ -16,7 +16,7 @@ class BookMarkHelper {
       "Authorization": "Bearer $token"
     };
 
-    var url = Uri.https(Config.apiUrl, Config.bookmarkUrl);
+    var url = Uri.http(Config.apiUrl, Config.bookmarkUrl);
     var response = await client.post(url,
         headers: requestHeaders, body: jsonEncode({"job": jobId}));
 
@@ -36,7 +36,7 @@ class BookMarkHelper {
       "Authorization": "Bearer $token"
     };
 
-    var url = Uri.https(Config.apiUrl, "${Config.bookmarkUrl}/$jobId");
+    var url = Uri.http(Config.apiUrl, "${Config.bookmarkUrl}/$jobId");
     var response = await client.delete(url, headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -55,7 +55,7 @@ class BookMarkHelper {
       "Authorization": "Bearer $token"
     };
 
-    var url = Uri.https(Config.apiUrl, Config.bookmarkUrl);
+    var url = Uri.http(Config.apiUrl, Config.bookmarkUrl);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode == 200) {

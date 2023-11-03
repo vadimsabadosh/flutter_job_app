@@ -20,7 +20,7 @@ class UserHelper {
       "Authorization": "Bearer $token"
     };
 
-    var url = Uri.https(Config.apiUrl, Config.uploadPhotoUrl);
+    var url = Uri.http(Config.apiUrl, Config.uploadPhotoUrl);
 
     var request = https.MultipartRequest("POST", url);
 

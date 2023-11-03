@@ -54,13 +54,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                 vertical: 60.h,
               ),
               children: [
-                CustomOutlineBtn(
-                  text: "MAIN SCREEEN",
-                  primaryColor: Color(kOrange.value),
-                  onTap: () {
-                    Get.to(() => const MainScreen());
-                  },
-                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

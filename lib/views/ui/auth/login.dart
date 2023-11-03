@@ -24,6 +24,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
+  bool isPasswordHidden = true;
+
+  void showHidePassword() {
+    setState(() {
+      isPasswordHidden = !isPasswordHidden;
+    });
+  }
 
   @override
   void dispose() {
@@ -36,14 +43,12 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Consumer<LoginNotifier>(
       builder: (context, state, child) {
-        //state.getPrefs();
-        //print('state.getPrefs(), ${state.entrypoint}');
         return Scaffold(
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(50),
             child: CustomAppBar(
               text: "Login",
-              child: state.entrypoint && state.loggedIn
+              child: state.loggedIn
                   ? GestureDetector(
                       onTap: () {
                         Get.back();
@@ -86,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                   const HeightSpacer(size: 20),
                   CustomTextField(
                     controller: password,
-                    obscureText: state.obscureText,
+                    obscureText: isPasswordHidden,
                     keyboardType: TextInputType.text,
                     hintText: "Password",
                     validator: (password) {
@@ -97,11 +102,9 @@ class _LoginPageState extends State<LoginPage> {
                       }
                     },
                     suffixIcon: GestureDetector(
-                      onTap: () {
-                        state.obscureText = !state.obscureText;
-                      },
+                      onTap: showHidePassword,
                       child: Icon(
-                        state.obscureText
+                        isPasswordHidden
                             ? Icons.visibility
                             : Icons.visibility_off,
                         color: Color(kDark.value),

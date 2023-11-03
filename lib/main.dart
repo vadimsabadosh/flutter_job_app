@@ -17,12 +17,12 @@ void main() async {
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  final entrypoint = prefs.getBool('entrypoint') ?? false;
+  final isOnboardingPassed = prefs.getBool('isOnboardingPassed') ?? false;
   final loggedIn = prefs.getBool('loggedIn') ?? false;
 
-  if (entrypoint & !loggedIn) {
+  if (isOnboardingPassed & !loggedIn) {
     defaultHomeScreen = const LoginPage();
-  } else if (entrypoint & loggedIn) {
+  } else if (loggedIn) {
     defaultHomeScreen = const MainScreen();
   }
 
